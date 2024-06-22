@@ -387,15 +387,15 @@ export default {
         default:
           if (event.event) {
             res.code = RES_CODE.EVENT_NOT_EXIST
-            res.message = '请更新 Twikoo 云函数至最新版本'
+            res.message = 'Backend needs update'
           } else {
             res.code = RES_CODE.NO_PARAM
-            res.message = 'Twikoo 云函数运行正常，请参考 https://twikoo.js.org/frontend.html 完成前端的配置'
+            res.message = 'Success!'
             res.version = VERSION
           }
       }
     } catch (e) {
-      logger.error('Twikoo 遇到错误，请参考以下错误信息。如有疑问，请反馈至 https://github.com/twikoojs/twikoo/issues')
+      logger.error('Error!')
       logger.error('请求参数：', event)
       logger.error('错误信息：', e)
       res.code = RES_CODE.FAIL
@@ -811,7 +811,7 @@ async function parse (comment, request) {
   const timestamp = Date.now()
   const isAdminUser = isAdmin()
   const isBloggerMail = equalsMail(comment.mail, config.BLOGGER_EMAIL)
-  if (isBloggerMail && !isAdminUser) throw new Error('请先登录管理面板，再使用博主身份发送评论')
+  if (isBloggerMail && !isAdminUser) throw new Error('请先登录管理面板，再使用管理员身份发送评论')
   const commentDo = {
     _id: uuidv4().replace(/-/g, ''),
     uid: getUid(),
